@@ -1,26 +1,24 @@
 package jSnake;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 
 public class View extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private int score = 4;
-	private static KeyListener controller = new Controller();
+	private static Model model = new Model(50,100);
+	private static Controller controller = new Controller(model);
 
 	/**
 	 * Launch the application.
@@ -32,6 +30,7 @@ public class View extends JFrame {
 					View frame = new View();
 					frame.setVisible(true);
 					frame.addKeyListener(controller);
+					controller.startGame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -53,10 +52,15 @@ public class View extends JFrame {
 		JLabel lblScore = new JLabel("Score: " + score);
 		lblScore.setBounds(0, 0, 46, 14);
 		contentPane.add(lblScore);
-		table = new JTable(new Model(50,100));
+		table = new JTable(model);
 		table.setBounds(0, 15, 1000, 500);
 		table.setRowHeight(10);
-		for (int i = 0; i < 100; i++) table.getColumnModel().getColumn(i).setWidth(50);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		for (int i = 0; i < 100; i++){
+			table.getColumnModel().getColumn(i).setMaxWidth(10);
+			table.getColumnModel().getColumn(i).setMinWidth(10);
+			table.getColumnModel().getColumn(i).setPreferredWidth(10);
+		}
 		table.setFocusable(false);
 		table.setRowSelectionAllowed(false);
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -82,8 +86,6 @@ public class View extends JFrame {
 				return c; 
 			 }
 		});
-		table.getModel().setValueAt(Constants.TILE_SNAKE, 49, 99);
-		table.getModel().setValueAt(Constants.TILE_SNAKE, 0, 4);
 		contentPane.add(table);
 	}
 }
