@@ -15,7 +15,7 @@ public class Controller implements KeyListener {
 	public void keyTyped(KeyEvent e) {}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() >= 47 && e.getKeyCode() <= 50) direction = e.getKeyCode();
+		if (e.getKeyCode() >= 37 && e.getKeyCode() <= 40) direction = e.getKeyCode();
 	}
 
 	public void keyReleased(KeyEvent e) {}
@@ -28,6 +28,7 @@ public class Controller implements KeyListener {
 		model.addToSnake(new Pair(0, 20));
 		model.addToSnake(new Pair(1, 20));
 		model.addToSnake(new Pair(2, 20));
+		model.placeFood();
 		
 		Thread t = new Thread(new Movement(this));
 		t.start();
@@ -46,7 +47,7 @@ class Movement implements Runnable{
 	public void run() {
 		while(true){
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

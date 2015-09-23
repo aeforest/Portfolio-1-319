@@ -16,9 +16,10 @@ public class View extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private int score = 4;
 	private static Model model = new Model(50,100);
 	private static Controller controller = new Controller(model);
+	
+	private JLabel lblScore;
 
 	/**
 	 * Launch the application.
@@ -42,6 +43,7 @@ public class View extends JFrame {
 	 * Create the frame.
 	 */
 	public View() {
+		model.setView(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(50, 50, 1000, 535);
 		contentPane = new JPanel();
@@ -49,8 +51,8 @@ public class View extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblScore = new JLabel("Score: " + score);
-		lblScore.setBounds(0, 0, 46, 14);
+		lblScore = new JLabel("Score: " + 3);
+		lblScore.setBounds(0, 0, 100, 15);
 		contentPane.add(lblScore);
 		table = new JTable(model);
 		table.setBounds(0, 15, 1000, 500);
@@ -87,5 +89,9 @@ public class View extends JFrame {
 			 }
 		});
 		contentPane.add(table);
+	}
+	
+	public void refreshScore(int score){
+		lblScore.setText("Score: " + score);
 	}
 }
