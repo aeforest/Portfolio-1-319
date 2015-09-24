@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class Model extends DefaultTableModel{
 	private Queue<Pair> snake = new ConcurrentLinkedQueue<Pair>();
-	private Pair head;
+	Pair head;
 	Random rand = new Random();
 	private Pair food = new Pair(20, 0);
 	private int score = 3;

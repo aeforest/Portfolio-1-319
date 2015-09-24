@@ -5,8 +5,10 @@ import java.awt.event.KeyListener;
 
 public class Controller implements KeyListener {
 	
-	private int direction = Constants.DIR_RIGHT;
-	private Model model;
+	int direction = Constants.DIR_RIGHT;
+	Model model;
+	Boolean paused = false;
+	View view;
 	
 	public Controller(Model model){
 		this.model = model;
@@ -16,6 +18,7 @@ public class Controller implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() >= 37 && e.getKeyCode() <= 40) direction = e.getKeyCode();
+		
 	}
 
 	public void keyReleased(KeyEvent e) {}
@@ -33,6 +36,17 @@ public class Controller implements KeyListener {
 		Thread t = new Thread(new Movement(this));
 		t.start();
 	}
+	public void pauseGame(){
+		paused = true;
+	}
+	public void resumeGame(){
+		paused = false;
+	}
+	public void setView(View view){
+		this.view = view;
+	}
+
+	
 
 }
 
@@ -45,14 +59,13 @@ class Movement implements Runnable{
 	}
 
 	public void run() {
-		while(true){
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		while(controller.view.wallCheck()){
+			
+			if(!controller.paused){
+				
+				controller.update();
 			}
-			controller.update();
+			
 		}
 	}
 	
