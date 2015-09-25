@@ -14,7 +14,7 @@ public class Model extends DefaultTableModel{
 	private Pair food = new Pair(20, 0);
 	private int score = 3;
 	private View view;
-	
+	boolean end = false;
 	public Model(int i, int j) {
 		super(i, j);
 	}
@@ -29,6 +29,7 @@ public class Model extends DefaultTableModel{
 	}
 	
 	public void move(int direction){
+		
 		Pair location = new Pair(head);
 		switch(direction){
 		case Constants.DIR_LEFT:
@@ -48,11 +49,17 @@ public class Model extends DefaultTableModel{
 			addToSnake(location);
 			score++;
 			placeFood();
-		} else{
+		} 
+		else if(Constants.TILE_SNAKE.equals(getValueAt(location.getY(), location.getX()))){
+			end = true;
+			view.endGame();
+		}
+		else{
 			addToSnake(location);
 			Pair tail = snake.remove();
 			setValueAt("", tail.getY(), tail.getX());
 		}
+		
 	}
 	
 	public void addToSnake(Pair location){

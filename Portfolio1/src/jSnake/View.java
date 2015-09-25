@@ -155,20 +155,11 @@ public class View extends JFrame {
 		}
 		lblScore.setText("Score: " + score);
 	}
-	public Boolean wallCheck(){
+	
+	public void endGame(){
 		Object[] options = {"New Game",
                 "Exit"};
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(model.head.getX() == 0 && controller.direction == 37 ||
-		model.head.getY() == 0 && controller.direction == 38 ||
-		model.head.getX() == 99 && controller.direction == 39 ||
-		model.head.getY() == 49 && controller.direction == 40){
-			
+		
 			int n = JOptionPane.showOptionDialog(null, "High Score is: " + highScore +
 					 "\nYour " + lblScore.getText(), "Game Over!",
 					 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
@@ -194,8 +185,5 @@ public class View extends JFrame {
 				
 				System.exit(0);
 			}
-			return false;
 		}
-		return true;
-	}
 }

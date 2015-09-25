@@ -9,6 +9,7 @@ public class Controller implements KeyListener {
 	Model model;
 	Boolean paused = false;
 	View view;
+	Thread t;
 	
 	public Controller(Model model){
 		this.model = model;
@@ -33,7 +34,7 @@ public class Controller implements KeyListener {
 		model.addToSnake(new Pair(2, 20));
 		model.placeFood();
 		
-		Thread t = new Thread(new Movement(this));
+		t = new Thread(new Movement(this));
 		t.start();
 	}
 	public void pauseGame(){
@@ -57,9 +58,26 @@ class Movement implements Runnable{
 	Movement(Controller controller){
 		this.controller = controller;
 	}
+	public boolean wallCheck(){
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(controller.model.head.getX() == 0 && controller.direction == 37 ||
+		controller.model.head.getY() == 0 && controller.direction == 38 ||
+		controller.model.head.getX() == 99 && controller.direction == 39 ||
+		controller.model.head.getY() == 49 && controller.direction == 40){
+			controller.view.endGame();
 
+			return false;
+		}
+		return true;
+	}
+	
 	public void run() {
-		while(controller.view.wallCheck()){
+		while(wallCheck() && !controller.model.end){
 			
 			if(!controller.paused){
 				
