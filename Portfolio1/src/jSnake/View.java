@@ -140,7 +140,7 @@ public class View extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		lblHighScore = new JLabel("High Score: ");
-		lblHighScore.setBounds(150, 0, 75, 14);
+		lblHighScore.setBounds(150, 0, 96, 14);
 		lblHighScore.setText("High Score: " + highScore);
 		contentPane.add(lblHighScore);
 		
@@ -173,17 +173,17 @@ public class View extends JFrame {
 					 "\nYour " + lblScore.getText(), "Game Over!",
 					 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
 					 null, options, options[0]);
+			try {
+				FileWriter fileOut = new FileWriter("HighScore.txt");
+				fileOut.write("");
+				String str = "" + highScore;
+				fileOut.write(str);
+				fileOut.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(n == 0){
-				try {
-					FileWriter fileOut = new FileWriter("HighScore.txt");
-					fileOut.write("");
-					String str = "" + highScore;
-					fileOut.write(str);
-					fileOut.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				this.dispose();
 				model = new Model(50,100);
 				controller = new Controller(model);
@@ -191,6 +191,7 @@ public class View extends JFrame {
 				View.main(null);	
 			}
 			else{
+				
 				System.exit(0);
 			}
 			return false;
